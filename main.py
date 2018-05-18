@@ -12,10 +12,10 @@ while not seed.isnumeric():
 
 def noise(nx,ny):
     # lol figure perlin out
-    return "#"
+    return random.choice(["#","."])
 
-height = 20
-width = 40
+height = 40
+width = 70
 
 maps = []
 
