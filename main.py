@@ -14,8 +14,8 @@ def noise(nx,ny):
     # lol figure perlin out
     return "#"
 
-height = 70
-width = 100
+height = 20
+width = 40
 
 maps = []
 
@@ -25,13 +25,13 @@ for y in range(height):
         nx = x/width - 0.5
         ny = y/height - 0.5
         maps[y][x] = noise(nx,ny)
-        print("e?")
 
-stdscr = curses.initscr()
-curses.noecho()
-curses.cbreak()
-curses.newwin(3,3,height,width)
-while True:
+def main(stdscr):
+    stdscr.clear()
     for h in range(height):
         for w in range (width):
-            window.addstr(h, w, value[h][x], [, attr])
+            stdscr.addstr(h, w, maps[h][w])
+    stdscr.refresh()
+    stdscr.getkey()
+
+curses.wrapper(main)
