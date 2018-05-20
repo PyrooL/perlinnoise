@@ -1,24 +1,33 @@
 import curses
 import random
 import numpy as np
+from math import floor, ceil
 
 hGrid = 3 
-wGrid = 8 
-height = 10*hGrid
-width = 10*wGrid
+wGrid = 7
+cHeight = 10*hGrid
+cWidth = 10*wGrid
 
-# for future seeding, currently does nothing
 seed = ""
-
-while not seed.isnumeric():
+while True:    
     seed = input("Seed input (leave blank for random): ")
     if seed == "":
-        seed = str(random.randint(-100000,100000))
-        print(seed)
+        random.seed(random.randint(-100000,100000))
+        break
+    if seed.isnumeric():
+        random.seed(int(seed))
         break
 
 def perlin(x,y):
-    return random.choice(["#","."]) # this is actually how noise works don't @ me
+    # return random.choice(["#","."]) # this is actually how noise works don't @ me
+    return str(findGridSquare(x,y)[0])
+
+def findGridSquare(x,y):
+    x0 = floor(x/wGrid)
+    y0 = floor(y/hGrid)
+    x1 = ceil(x/wGrid)
+    y1 = ceil(y/hGrid)
+    return [x0,y0,x1,y1]
 
 vMap = []
 for y in range(hGrid):
@@ -30,12 +39,10 @@ for y in range(hGrid):
 
 # using ASCII chars instead of pixels
 maps = []
-for y in range(height):
-    maps.append([0] * width)
-    for x in range(width):
-        nx = x/width - 0.5
-        ny = y/height - 0.5
-        maps[y][x] = perlin(nx,ny)
+for y in range(cHeight):
+    maps.append([0] * cWidth)
+    for x in range(cWidth):
+        maps[y][x] = perlin(x,y)
 
 # just because i need this later and know how to do it...
 def lerp(a0, a1, w):
@@ -45,8 +52,8 @@ def lerp(a0, a1, w):
 def main(stdscr):
     stdscr.clear()
     # prints the map
-    for h in range(height):
-        for w in range (width):
+    for h in range(cHeight):
+        for w in range (cWidth):
             stdscr.addstr(h, w, maps[h][w])
 
     stdscr.refresh()
