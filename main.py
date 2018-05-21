@@ -33,8 +33,29 @@ def perlin(x,y):
     p1 = lerp(g1,g2,u)
     p2 = lerp(g3,g4,u)
     avg = lerp(p1,p2,v)
+    if avg>=0.9:
+        return "9"
+    elif avg>=0.8:
+        return "8"
+    elif avg>=0.7:
+        return "7"
+    elif avg>=0.6:
+        return "6"
+    elif avg>=0.5:
+        return "5"
+    elif avg>=0.4:
+        return "4"
+    elif avg>=0.3:
+        return "3"
+    elif avg>=0.2:
+        return "2"
+    elif avg>=0.1:
+        return "1"
+    else:
+        return "0"
+
     # return random.choice(["#","."]) # this is actually how noise works don't @ me
-    return str(round(avg*10))
+    # return str(round(avg*10))
 
 def findGridSquare(x,y):
     # corner 0 being top left, 1 being bottom right
@@ -92,6 +113,7 @@ def main(stdscr):
     for h in range(cHeight):
         for w in range (cWidth):
             stdscr.addstr(h, w, cMap[h][w])
+    # stdscr.addstr(cHeight+1,0,str(random.seed()))
     stdscr.refresh()
     stdscr.getkey()
 
