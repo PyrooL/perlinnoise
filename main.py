@@ -4,13 +4,15 @@ from math import floor, ceil, sqrt, atan
 vMap = []
 cMap = []
 
+vectors = [[0,1],[1,0],[1,1],[-1,-1],[-1,0],[0,-1],[-1,1],[1,-1]] 
+
 # grid dimensions
 hGrid = 3 
 wGrid = 7
 
 # character grid to display
-cHeight = 10*hGrid
-cWidth = 10*wGrid
+cHeight = hGrid
+cWidth = wGrid
 
 seed = ""
 while True:    
@@ -63,7 +65,7 @@ def dotGridGradient(nodes):
     trd = [top*hGrid-cy,right*wGrid-cx]
     bld = [cy-bottom*hGrid,cx-left*wGrid]
     brd = [cy-bottom*hGrid,right*wGrid-cx]
-    # dot products wew
+    # dot products 
     tldot = tlv[0]*tld[0]+tlv[1]*tld[1]
     trdot = trv[0]*trd[0]+trv[1]*trd[1]
     bldot = blv[0]*bld[0]+blv[1]*bld[1]
@@ -75,7 +77,7 @@ def vGen():
         vMap.append([0] * (wGrid+1))
     for y in range(hGrid+1):
         for x in range(wGrid+1):
-            vMap[y][x]=[random.random(),random.random()]
+            vMap[y][x]=random.choice(vectors)
 
 def pCalc():
     for y in range(cHeight):
@@ -88,13 +90,16 @@ def lerp(a0, a1, w):
 
 vGen()
 pCalc()
-
+#print(vMap)
+#input()
+#print(cMap)
+#input()
 def main(stdscr):
     stdscr.clear()
     for h in range(cHeight):
         for w in range (cWidth):
+    # stdscr.addstr(cHeight+1,0,perlin(1,20))
             stdscr.addstr(h, w, cMap[h][w])
-    stdscr.addstr(cHeight+1,0,perlin(1,20))
     stdscr.refresh()
     stdscr.getkey()
 
